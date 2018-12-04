@@ -9,6 +9,7 @@ Pregunta 2 (50 puntos)
 1. Descargue el precio de las acciones de Microsoft (“MSFT”) y Apple (“AAPL”) desde Enero
 del 2000 hasta Agosto del 2018 con periodicidad mensual.
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, results='hide'}
+encoding: UTF-8
 library(dplyr)
 library(tidyr)
 library(tidyquant)
