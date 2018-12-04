@@ -3,16 +3,54 @@ title: "R Notebook"
 output: html_notebook
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
 
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
 
-```{r}
-plot(cars)
+Pregunta 2 (50 puntos)
+1. Descargue el precio de las acciones de Microsoft (“MSFT”) y Apple (“AAPL”) desde Enero
+del 2000 hasta Agosto del 2018 con periodicidad mensual.
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, results='hide'}
+library(dplyr)
+library(tidyr)
+library(tidyquant)
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+```{r echo = FALSE}
+yahoo <- tq_get(c("MSFT", "AAPL"),
+get = "stock.prices",
+from = "2000-01-01",
+to = "2018-8-30",
+periodicity = "monthly")
+```
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
 
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+2. Utilizando los datos de 2.1, construya una función que permita:
+
+  a. Calcular los retornos.
+  b. Graficar los retornos y retornos acumulados.
+  c. Testear normalidad utilizando Jarque-Bera (JB)
+  
+```{r echo = FALSE}
+
+```
+```{r echo = FALSE}
+
+```
+
+
+Pregunta 3 (30 puntos)
+a. Calcule E(beta1) y var(beta1) para muestras de tamaños 50, 100, 500, 1000. ¿Existe sesgo?, ¿Desaparece
+el sesgo a medida que el tamaño de la muestra aumenta?
+```{r echo = FALSE}
+
+```
+
+b. Grafique la distribución de ˆ 1 para tamaños de muestra n = 50, 100, 500, 1000
+```{r echo = FALSE}
+
+```
+
+c. Si x2 ~ U[0, 1], ¿Cómo cambian los resultados que obtuviste en (a) y (b)?
+
+```{r echo = FALSE}
+
+```
