@@ -16,7 +16,13 @@ library(tidyquant)
 ```
 
 ```{r echo = FALSE}
-yahoo <- tq_get(c("MSFT", "AAPL"),
+MSFT <- tq_get(c("MSFT"),
+get = "stock.prices",
+from = "2000-01-01",
+to = "2018-8-30",
+periodicity = "monthly")
+
+AAPL <- tq_get(c("AAPL"),
 get = "stock.prices",
 from = "2000-01-01",
 to = "2018-8-30",
@@ -32,7 +38,65 @@ periodicity = "monthly")
   
 ```{r echo = FALSE}
 
+ function_finance <- function(x, return, graph, norm) {
+   if (return=="yes") {
+x <- x %>% 
+mutate(retorno = log(close/lag(close))) 
+  } else if (return=="no") {
+    x <- x %>% 
+mutate(retorno = (close-lag(close))/lag(close)) 
+  }
+      else   {
+  return("Para return valores validos son solo yes y no")
+  }
+   
+  if (graph=="type 1") {
+grafico <- ggplot(x, aes(date, retorno))+
+  geom_line()  
+
+  } else if (graph=="type 2")   {
+    
+
+first <- x$close %>% first()
+   x <- x %>%  mutate(retorno=(close-first/first))
+  
+   grafico <- ggplot(x, aes(date, retorno))+
+  geom_line()
+  
+  }
+   else   {
+  return("Para return valores validos son solo type 1 y type 2")
+  }
+   
+     if (norm=="yes") {
+jb <- summarise(test, skew=((sum((x$close - mean(x$close))^3)/nrow(x))
+                       /((sd(x$close))^3)),
+                  kurt=((sum((x$close - mean(x$close))^4)/nrow(x))
+                       /((sd(x$close))^4)),
+           JB= (nrow(x)*(((skew^2)/6)+(((kurt-3)^2)/24)))
+           )
+  print(jb$JB)
+
+
+
+  } else if (norm=="no")  {
+jb <- summarise(test, skew=((sum((x$close - mean(x$close))^3)/nrow(x))
+                       /((sd(x$close))^3)),
+                  kurt=((sum((x$close - mean(x$close))^4)/nrow(x))
+                       /((sd(x$close))^4)),
+           JB= (nrow(x)*(((skew^2)/6)+(((kurt-3)^2)/24)))) 
+  }
+   
+else   {
+  return("Para return valores validos son solo yes y no")
+  }
+return(grafico)
+}
+ 
+ function_finance(MSFT, "yes", "type 1", "yes")
 ```
+
+
 ```{r echo = FALSE}
 
 ```
