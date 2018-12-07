@@ -19,7 +19,7 @@ library(gridExtra)
 
 ```
 
-```{r echo = FALSE}
+```{r}
 ## 2.1
 yahoo <- tq_get(c("MSFT", "AAPL"),
 get = "stock.prices",
@@ -31,30 +31,32 @@ periodicity = "monthly")
 ```
 
 
+ 2.2
 
-
-```{r echo = FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ## 2.2
+
  function_finance <- function(x, return, graph, norm) {
    if (return=="yes") {
 x <- x %>% 
   group_by(symbol) %>% 
 mutate(retorno = log(close/lag(close))) 
-  } else if (return=="no") {
+                    } 
+   else if (return=="no") {
     x <- x %>% 
         group_by(symbol) %>% 
 mutate(retorno = (close-lag(close))/lag(close)) 
-  }
+                           }
       else   {
   return("Para return valores validos son solo yes y no")
-  }
+              }
    
   if (graph=="type 1") {
 grafico <-  ggplot(x, aes(date, retorno))+
   geom_line()  +
   facet_wrap(~symbol)
-
-  } else if (graph=="type 2")   {
+                  } 
+   else if (graph=="type 2")   {
     
 
 first <- x$close %>% first()
@@ -64,43 +66,62 @@ first <- x$close %>% first()
   geom_line()+
   facet_wrap(~symbol)
   
-  }
+                          }
    else   {
   return("Para return valores validos son solo type 1 y type 2")
-  }
+         }
    
      if (norm=="yes") {
-jb <- summarise(x, skew=((sum((x$close - mean(x$close))^3)/nrow(x))
-                       /((sd(x$close))^3)),
-                  kurt=((sum((x$close - mean(x$close))^4)/nrow(x))
-                       /((sd(x$close))^4)),
-           JB= (nrow(x)*(((skew^2)/6)+(((kurt-3)^2)/24)))
-           )
-
-   if (jb$JB>pchisq(95, df=2, lower.tail=FALSE)) {
-  print("Datos no siguen una distribucion normal ")
-           
-
-
-
-
+       
+  ja <- x %>%   group_by(symbol) %>% select(symbol, close) %>%  
+   summarise_all(funs(mean, sd)) 
+  
+  x <- x %>% inner_join(ja) %>% 
+    mutate(sum3= (close-mean)^3, sum4= (close-mean)^4 )
+  
+  j3 <- x %>%   group_by(symbol) %>% select(symbol, sum3) %>%  
+   summarise_all(funs(sum)) 
+  
+    j4 <- x %>%   group_by(symbol) %>% select(symbol, sum4) %>%  
+   summarise_all(funs(sum)) 
+    j5 <- x %>% group_by(symbol) %>% select(symbol, sum4) %>%  
+   summarise(fila=n())  
+    final <- ja %>% inner_join(j3) %>% inner_join(j4) %>% inner_join(j5)
+     jb <- final  %>% mutate(
+      skew=((sum3/fila) /((sd)^3)),
+      kurt=(sum4/fila) /((sd)^4),
+      JB= (fila*(((skew^2)/6)+(((kurt-3)^2)/24))))
+for (i in 1:nrow(jb)) {
+     if (jb[i,8]>pchisq(95, df=2, lower.tail=FALSE)) {
+    accion=jb[i,1]
+    print(paste0(accion, " no sigue una distribucion normal"))
+     }
+  else 
+  {
+    accion=jb[i,1]
+    print(paste0(accion, " siguen una distribucion normal"))
+     }
+}
   }
-     else  {
-  print("Datos siguen una distribucion normal ")
-           
-
-
-
-
-  }
-
-
-  } else if (norm=="no")  {
-jb <- summarise(x, skew=((sum((x$close - mean(x$close))^3)/nrow(x))
-                       /((sd(x$close))^3)),
-                  kurt=((sum((x$close - mean(x$close))^4)/nrow(x))
-                       /((sd(x$close))^4)),
-           JB= (nrow(x)*(((skew^2)/6)+(((kurt-3)^2)/24)))) 
+ else if (norm=="no")  {
+  ja <- x %>%   group_by(symbol) %>% select(symbol, close) %>%  
+   summarise_all(funs(mean, sd)) 
+  
+  x <- x %>% inner_join(ja) %>% 
+    mutate(sum3= (close-mean)^3, sum4= (close-mean)^4 )
+  
+  j3 <- x %>%   group_by(symbol) %>% select(symbol, sum3) %>%  
+   summarise_all(funs(sum)) 
+  
+    j4 <- x %>%   group_by(symbol) %>% select(symbol, sum4) %>%  
+   summarise_all(funs(sum)) 
+    j5 <- x %>% group_by(symbol) %>% select(symbol, sum4) %>%  
+   summarise(fila=n())  
+    final <- ja %>% inner_join(j3) %>% inner_join(j4) %>% inner_join(j5)
+     jb <- final  %>% mutate(
+      skew=((sum3/fila) /((sd)^3)),
+      kurt=(sum4/fila) /((sd)^4),
+      JB= (fila*(((skew^2)/6)+(((kurt-3)^2)/24))))
   }
    
 else   {
@@ -111,12 +132,13 @@ return(grafico)
  
  function_finance(yahoo, "yes", "type 2", "yes")
 
+
 ```
 
+3 a y b
 
 
-
-```{r echo = FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ##3a y 3b
 set.seed(123)
 
@@ -217,9 +239,9 @@ grid.arrange(g11, g21, g31, g41, nrow=2, ncol=2)
   
 ```
 
+ 3c
 
-
-```{r echo = FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ##3c
 
 set.seed(123)
