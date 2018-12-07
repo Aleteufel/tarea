@@ -5,7 +5,6 @@ author: "Alexander Teufel, Daniela Urra, Pía Camila Sandoval"
 date: "07 de diciembre, 2018"
 output:
   rmarkdown::html_document:
-    theme: Tactile 
     df_print: paged
     encoding: UTF-8
 ---
@@ -166,9 +165,11 @@ return(grafico)
 <div align="center">
 #Pregunta 3
 </div>
- a. Calcule E($&beta;_1$) y var($&beta;_1$) para muestras de tamaños 50, 100, 500, 1000. ¿Existe sesgo?, ¿Desaparece el sesgo a medida que el tamaño de la muestra aumenta?
+ a. Calcule E($\beta_1$) y var($\beta_1$) para muestras de tamaños 50, 100, 500, 1000. ¿Existe sesgo?, ¿Desaparece el sesgo a medida que el tamaño de la muestra aumenta?
  
- b. Grafique la distribución de $&beta;_1$ para tamaños de muestra n = 50, 100, 500, 1000
+ Existe sesgo y como veremos a continuación este aumenta con el tamaño de la muestra.
+ 
+ b. Grafique la distribución de $\beta_1$; para tamaños de muestra n = 50, 100, 500, 1000
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -272,8 +273,9 @@ grid.arrange(g11, g21, g31, g41, nrow=2, ncol=2)
   
 ```
 
-c. Si $x_1$ ~U[0, 1], ¿Cómo cambian los resultados que obtuviste en (a) y (b)?
+c. Si $x_2$ ~U[0, 1], ¿Cómo cambian los resultados que obtuviste en (a) y (b)?
 
+Desaparece el sesgo con este cambio.
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ##3c
 

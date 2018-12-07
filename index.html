@@ -158,8 +158,11 @@ periodicity = &quot;monthly&quot;) </code></pre>
 <h1 id="pregunta-3">Pregunta 3</h1>
 </div>
 <ol style="list-style-type: lower-alpha">
-<li><p>Calcule E(β) y var(β) para muestras de tamaños 50, 100, 500, 1000. ¿Existe sesgo?, ¿Desaparece el sesgo a medida que el tamaño de la muestra aumenta?</p></li>
-<li><p>Grafique la distribución de β para tamaños de muestra n = 50, 100, 500, 1000</p></li>
+<li>Calcule E(<span class="math inline">\(\beta_1\)</span>) y var(<span class="math inline">\(\beta_1\)</span>) para muestras de tamaños 50, 100, 500, 1000. ¿Existe sesgo?, ¿Desaparece el sesgo a medida que el tamaño de la muestra aumenta?</li>
+</ol>
+<p>Existe sesgo y como veremos a continuación este aumenta con el tamaño de la muestra.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Grafique la distribución de <span class="math inline">\(\beta_1\)</span>; para tamaños de muestra n = 50, 100, 500, 1000</li>
 </ol>
 <pre><code>##         E[B1]      var[B1]
 ## 50   3.261828 0.0250042941
@@ -170,6 +173,7 @@ periodicity = &quot;monthly&quot;) </code></pre>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Si <span class="math inline">\(x_1\)</span> ~U[0, 1], ¿Cómo cambian los resultados que obtuviste en (a) y (b)?</li>
 </ol>
+<p>Desaparece el sesgo con este cambio.</p>
 <pre><code>##         E[B1]      var[B1]
 ## 50   2.522044 0.0241325532
 ## 100  2.461283 0.0094700495
