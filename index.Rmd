@@ -1,3 +1,4 @@
+
 ---
 title: "Tarea 5"
 author: "Alexander Teufel, Daniela Urra, Pía Camila Sandoval"
@@ -7,9 +8,6 @@ output:
     df_print: paged
     encoding: UTF-8
 ---
-
-
-
 
 
 
