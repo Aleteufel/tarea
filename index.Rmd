@@ -4,7 +4,8 @@ title: "Tarea 5"
 author: "Alexander Teufel, Daniela Urra, Pía Camila Sandoval"
 date: "07 de diciembre, 2018"
 output:
-  html_document:
+  rmarkdown::html_document:
+    theme: Tactile 
     df_print: paged
     encoding: UTF-8
 ---
