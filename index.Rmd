@@ -271,7 +271,7 @@ grid.arrange(g11, g21, g31, g41, nrow=2, ncol=2)
   
 ```
 
-c. Si $x_1$ ~U[0, 1], ¿Cómo cambian los resultados que obtuviste en (a) y (b)?
+c. Si x_1 ~U[0, 1], ¿Cómo cambian los resultados que obtuviste en (a) y (b)?
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ##3c
