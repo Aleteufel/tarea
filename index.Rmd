@@ -17,6 +17,7 @@ output:
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, results='hide'}
 library(dplyr)
+library(knitr)
 library(tidyr)
 library(tidyquant)
 library(ggplot2)
