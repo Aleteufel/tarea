@@ -166,9 +166,9 @@ return(grafico)
 <div align="center">
 #Pregunta 3
 </div>
- a. Calcule E(&beta;$_1$) y var(&beta;$_1$) para muestras de tamaños 50, 100, 500, 1000. ¿Existe sesgo?, ¿Desaparece el sesgo a medida que el tamaño de la muestra aumenta?
+ a. Calcule E(&beta;) y var(&beta;) para muestras de tamaños 50, 100, 500, 1000. ¿Existe sesgo?, ¿Desaparece el sesgo a medida que el tamaño de la muestra aumenta?
  
- b. Grafique la distribución de &beta;$_1$ para tamaños de muestra n = 50, 100, 500, 1000
+ b. Grafique la distribución de &beta; para tamaños de muestra n = 50, 100, 500, 1000
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
