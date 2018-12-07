@@ -5,7 +5,6 @@ date: "07 de diciembre, 2018"
 output:
   html_document:
     df_print: paged
-encoding: UTF-8
 ---
 
 
@@ -16,15 +15,10 @@ encoding: UTF-8
 
 
 
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, results='hide'}
-
-library(dplyr)
-library(tidyr)
-library(tidyquant)
-library(ggplot2)
-library(gridExtra)
-library(tidyquant)
-
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(dplyr, openintro, tidyr,tidyquant, ggplot2, gridExtra, tidyquant)
 
 ```
 <div align="center">
