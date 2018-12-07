@@ -15,6 +15,7 @@ library(tidyr)
 library(tidyquant)
 library(ggplot2)
 library(gridExtra)
+library(tidyquant)
 
 
 ```
@@ -54,7 +55,12 @@ mutate(retorno = (close-lag(close))/lag(close))
   if (graph=="type 1") {
 grafico <-  ggplot(x, aes(date, retorno))+
   geom_line()  +
-  facet_wrap(~symbol)
+  facet_wrap(~symbol)+
+           labs(
+            x = "Fecha",
+            y = "Retorno") +
+       theme_tq()
+  
                   } 
    else if (graph=="type 2")   {
     
@@ -64,7 +70,11 @@ first <- x$close %>% first()
   
    grafico <- ggplot(x, aes(date, retorno))+
   geom_line()+
-  facet_wrap(~symbol)
+  facet_wrap(~symbol)+
+           labs(
+            x = "Fecha",
+            y = "Retorno") +
+       theme_tq()
   
                           }
    else   {
@@ -130,10 +140,14 @@ else   {
 return(grafico)
 }
  
- function_finance(yahoo, "yes", "type 2", "yes")
+
 
 
 ```
+```{r , message=FALSE, warning=FALSE}
+ function_finance(yahoo, "no", "type 2", "yes")
+```
+
 
 3 a y b
 
