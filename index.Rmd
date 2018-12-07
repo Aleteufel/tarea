@@ -5,6 +5,7 @@ date: "07 de diciembre, 2018"
 output:
   html_document:
     df_print: paged
+    encoding: UTF-8
 ---
 
 
