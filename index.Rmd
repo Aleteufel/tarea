@@ -1,0 +1,322 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+encoding: UTF-8
+---
+
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE, results='hide'}
+
+library(dplyr)
+library(tidyr)
+library(tidyquant)
+library(ggplot2)
+library(gridExtra)
+
+
+```
+
+```{r echo = FALSE}
+## 2.1
+yahoo <- tq_get(c("MSFT", "AAPL"),
+get = "stock.prices",
+from = "2000-01-01",
+to = "2018-8-30",
+periodicity = "monthly") 
+
+
+```
+
+
+
+
+```{r echo = FALSE}
+## 2.2
+ function_finance <- function(x, return, graph, norm) {
+   if (return=="yes") {
+x <- x %>% 
+  group_by(symbol) %>% 
+mutate(retorno = log(close/lag(close))) 
+  } else if (return=="no") {
+    x <- x %>% 
+        group_by(symbol) %>% 
+mutate(retorno = (close-lag(close))/lag(close)) 
+  }
+      else   {
+  return("Para return valores validos son solo yes y no")
+  }
+   
+  if (graph=="type 1") {
+grafico <-  ggplot(x, aes(date, retorno))+
+  geom_line()  +
+  facet_wrap(~symbol)
+
+  } else if (graph=="type 2")   {
+    
+
+first <- x$close %>% first()
+   x <- x %>%  mutate(retorno=(close-first/first))
+  
+   grafico <- ggplot(x, aes(date, retorno))+
+  geom_line()+
+  facet_wrap(~symbol)
+  
+  }
+   else   {
+  return("Para return valores validos son solo type 1 y type 2")
+  }
+   
+     if (norm=="yes") {
+jb <- summarise(x, skew=((sum((x$close - mean(x$close))^3)/nrow(x))
+                       /((sd(x$close))^3)),
+                  kurt=((sum((x$close - mean(x$close))^4)/nrow(x))
+                       /((sd(x$close))^4)),
+           JB= (nrow(x)*(((skew^2)/6)+(((kurt-3)^2)/24)))
+           )
+
+   if (jb$JB>pchisq(95, df=2, lower.tail=FALSE)) {
+  print("Datos no siguen una distribucion normal ")
+           
+
+
+
+
+  }
+     else  {
+  print("Datos siguen una distribucion normal ")
+           
+
+
+
+
+  }
+
+
+  } else if (norm=="no")  {
+jb <- summarise(x, skew=((sum((x$close - mean(x$close))^3)/nrow(x))
+                       /((sd(x$close))^3)),
+                  kurt=((sum((x$close - mean(x$close))^4)/nrow(x))
+                       /((sd(x$close))^4)),
+           JB= (nrow(x)*(((skew^2)/6)+(((kurt-3)^2)/24)))) 
+  }
+   
+else   {
+  return("Para return valores validos son solo yes y no")
+  }
+return(grafico)
+}
+ 
+ function_finance(yahoo, "yes", "type 2", "yes")
+
+```
+
+
+
+
+```{r echo = FALSE}
+##3a y 3b
+set.seed(123)
+
+reps = 10000
+
+betas = matrix(NA, nrow = reps, ncol = 8)
+
+beta0 = 2
+
+beta1 = 2.5
+
+beta2 = 1
+
+n = c(50, 100, 500, 1000)  #tamagno muestral
+
+for (j in 1:length(n)) {
+  
+  e=rnorm(n[j],0,1)
+  X=rnorm(n[j],20,1)
+  x2=0.8*X+e
+  
+  for (i in 1:reps) {
+    
+    u= rnorm(n[j],0,1)
+    
+    Y = beta0 + beta1*X +beta2*x2+ u 
+    
+    model = lm(Y~X)  
+    
+    betas[i,j] = model$coef[1]
+    
+    betas[i,j+4] = model$coef[2]
+    
+  }
+  
+}
+
+betas_df <- data.frame(betas)
+
+# GRAFICOS
+list <- c(mean(betas_df[,5]), var(betas_df[,5]),mean(betas_df[,6]), var(betas_df[,6]),mean(betas_df[,7]), var(betas_df[,7]),mean(betas_df[,8]), var(betas_df[,8]))
+smoke <- matrix(list,ncol=2,byrow=TRUE)
+colnames(smoke) <- c("E[B1]","var[B1]")
+rownames(smoke) <- c("50", "100", "500", "1000")
+smoke
+
+
+g11 <- ggplot(betas_df) + 
+  
+  geom_histogram(aes(betas_df[,5], y=..density..), col="black", bins = 30) +
+  
+  stat_function(fun=dnorm, args=list(mean=mean(betas_df[,5]), sd=sd(betas_df[,5])), 
+                
+                geom="line", colour="red", size=1) +
+  
+  ylab("Densidad") +   ggtitle("n=50") + xlab(expression(hat(beta)[1])) +
+  
+  theme_bw()
+
+g21 <- ggplot(betas_df) + 
+  
+  geom_histogram(aes(betas_df[,6], y=..density..), col="black", bins = 30) +
+  
+  stat_function(fun=dnorm, args=list(mean=mean(betas_df[,6]), sd=sd(betas_df[,6])), 
+                
+                geom="line", colour="red", size=1) +
+  
+  ylab("Densidad") +   ggtitle("n=100") + xlab(expression(hat(beta)[1])) +
+  
+  theme_bw()
+
+g31 <- ggplot(betas_df) + 
+  
+  geom_histogram(aes(betas_df[,7], y=..density..), col="black", bins = 30) +
+  
+  stat_function(fun=dnorm, args=list(mean=mean(betas_df[,7]), sd=sd(betas_df[,7])), 
+                
+                geom="line", colour="red", size=1) +
+  
+  ylab("Densidad") +   ggtitle("n=500") + xlab(expression(hat(beta)[1])) +
+  
+  theme_bw()
+
+g41 <- ggplot(betas_df) + 
+  
+  geom_histogram(aes(betas_df[,8], y=..density..), col="black", bins = 30) +
+  
+  stat_function(fun=dnorm, args=list(mean=mean(betas_df[,8]), sd=sd(betas_df[,8])), 
+                
+                geom="line", colour="red", size=1) +
+  
+  ylab("Densidad") +   ggtitle("n=1000") + xlab(expression(hat(beta)[1])) +
+  
+  theme_bw()
+
+grid.arrange(g11, g21, g31, g41, nrow=2, ncol=2)
+  
+  
+```
+
+
+
+```{r echo = FALSE}
+##3c
+
+set.seed(123)
+
+reps = 10000
+
+betas = matrix(NA, nrow = reps, ncol = 8)
+
+beta0 = 2
+
+beta1 = 2.5
+
+beta2 = 1
+
+n = c(50, 100, 500, 1000)  #tamagno muestral
+
+for (j in 1:length(n)) {
+  
+  X=rnorm(n[j],20,1)
+  x2=runif(n[j],0,1)
+  
+  for (i in 1:reps) {
+    
+    u= rnorm(n[j],0,1)
+    
+    Y = beta0 + beta1*X +beta2*x2+ u 
+    
+    model = lm(Y~X)  
+    
+    betas[i,j] = model$coef[1]
+    
+    betas[i,j+4] = model$coef[2]
+    
+  }
+  
+}
+
+betas_df <- data.frame(betas)
+
+# GRAFICOS
+list <- c(mean(betas_df[,5]), var(betas_df[,5]),mean(betas_df[,6]), var(betas_df[,6]),mean(betas_df[,7]), var(betas_df[,7]),mean(betas_df[,8]), var(betas_df[,8]))
+smoke <- matrix(list,ncol=2,byrow=TRUE)
+colnames(smoke) <- c("E[B1]","var[B1]")
+rownames(smoke) <- c("50", "100", "500", "1000")
+smoke
+
+
+g11 <- ggplot(betas_df) + 
+  
+  geom_histogram(aes(betas_df[,5], y=..density..), col="black", bins = 30) +
+  
+  stat_function(fun=dnorm, args=list(mean=mean(betas_df[,5]), sd=sd(betas_df[,5])), 
+                
+                geom="line", colour="red", size=1) +
+  
+  ylab("Densidad") +   ggtitle("n=50") + xlab(expression(hat(beta)[1])) +
+  
+  theme_bw()
+
+g21 <- ggplot(betas_df) + 
+  
+  geom_histogram(aes(betas_df[,6], y=..density..), col="black", bins = 30) +
+  
+  stat_function(fun=dnorm, args=list(mean=mean(betas_df[,6]), sd=sd(betas_df[,6])), 
+                
+                geom="line", colour="red", size=1) +
+  
+  ylab("Densidad") +   ggtitle("n=100") + xlab(expression(hat(beta)[1])) +
+  
+  theme_bw()
+
+g31 <- ggplot(betas_df) + 
+  
+  geom_histogram(aes(betas_df[,7], y=..density..), col="black", bins = 30) +
+  
+  stat_function(fun=dnorm, args=list(mean=mean(betas_df[,7]), sd=sd(betas_df[,7])), 
+                
+                geom="line", colour="red", size=1) +
+  
+  ylab("Densidad") +   ggtitle("n=500") + xlab(expression(hat(beta)[1])) +
+  
+  theme_bw()
+
+g41 <- ggplot(betas_df) + 
+  
+  geom_histogram(aes(betas_df[,8], y=..density..), col="black", bins = 30) +
+  
+  stat_function(fun=dnorm, args=list(mean=mean(betas_df[,8]), sd=sd(betas_df[,8])), 
+                
+                geom="line", colour="red", size=1) +
+  
+  ylab("Densidad") +   ggtitle("n=1000") + xlab(expression(hat(beta)[1])) +
+  
+  theme_bw()
+
+grid.arrange(g11, g21, g31, g41, nrow=2, ncol=2)
+  
+  
+```
+
