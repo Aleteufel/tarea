@@ -279,7 +279,7 @@ grid.arrange(g11, g21, g31, g41, nrow=2, ncol=2)
 ```
  
  
- Comentarios 3.a: Existe sesgo y c este aumenta con el tamaño de la muestra.
+ Comentarios 3.a: Existe sesgo y este aumenta con el tamaño de la muestra.
  como se muestra en la tabla los retornos se muestran relativamente constantes ante variaciones en el tamaño muestral, alcanzando retornos de 3.26 a 3.35. La varianza calculada para $\beta_1$ disminuye a medida que la muestra aumenta. Dado que la varianza representa la variabilidad de los datos respecto a su media, podemos observar que a medida que aumenta el tamaño de la muestra el modelo se vuelve más eficiente.
 Comentarios 3.b: en los gráficos podemos observar la distribución de ß para distintos tamaños de muestra, además la línea roja representa la curva de distribución normal. Cuando la muestra es de tamaño 50 y 1000 podemos observar una tendencia a distribución normal de los retornos, con retornos estimados de $\beta_1$ de 3.26 y 3.35 respectivamente.
 
