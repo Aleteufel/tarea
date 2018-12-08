@@ -162,7 +162,7 @@ return(grafico)
 ```
 
 
-Comentarios 2.2: en los gráficos podemos observar la evolución de los retornos en las acciones de Apple y Microsoft, podemos ver que el retorno de Apple tiene una conducta exponencial luego de la caída en el año 2016-2017, alcanzando un retorno superior a USD$250, si bien las acciones de Apple han tenido algunas caídas graticas estas siempre son luego de fuertes alzas en los retornos. En comparación al observar el retorno obtenido por las acciones de Microsoft podemos ver un patrón de u donde en el año 2000 se ve una drástica disminución del retorno, luego de eso las acciones comienzan a tener un comportamiento más estable hasta el año 2009 donde podemos observar una baja considerable en los retornos. Desde aproximadamente el año 2016-2017 vemos un retorno en constante alza.
+En los gráficos podemos observar la evolución de los retornos en las acciones de Apple y Microsoft, podemos ver que el retorno de Apple tiene una conducta exponencial luego de la caída en el año 2016-2017, alcanzando un retorno superior a USD$250, si bien las acciones de Apple han tenido algunas caídas graticas estas siempre son luego de fuertes alzas en los retornos. En comparación al observar el retorno obtenido por las acciones de Microsoft podemos ver un patrón de u donde en el año 2000 se ve una drástica disminución del retorno, luego de eso las acciones comienzan a tener un comportamiento más estable hasta el año 2009 donde podemos observar una baja considerable en los retornos. Desde aproximadamente el año 2016-2017 vemos un retorno en constante alza.
 
 Por otro lado al realizas test de normalidad utilizando Jarque-Bera observamos que las acciones de Apple y Microsoft no siguen una distribución normal, esto significa que existe un desequilibrio en la distribución de los pesos.
 
@@ -279,9 +279,10 @@ grid.arrange(g11, g21, g31, g41, nrow=2, ncol=2)
 ```
  
  
- Comentarios 3.a: Existe sesgo y este aumenta con el tamaño de la muestra.
+ Existe sesgo y este aumenta con el tamaño de la muestra.
  como se muestra en la tabla los retornos se muestran relativamente constantes ante variaciones en el tamaño muestral, alcanzando retornos de 3.26 a 3.35. La varianza calculada para $\beta_1$ disminuye a medida que la muestra aumenta. Dado que la varianza representa la variabilidad de los datos respecto a su media, podemos observar que a medida que aumenta el tamaño de la muestra el modelo se vuelve más eficiente.
-Comentarios 3.b: en los gráficos podemos observar la distribución de ß para distintos tamaños de muestra, además la línea roja representa la curva de distribución normal. Cuando la muestra es de tamaño 50 y 1000 podemos observar una tendencia a distribución normal de los retornos, con retornos estimados de $\beta_1$ de 3.26 y 3.35 respectivamente.
+ 
+En los gráficos podemos observar la distribución de ß para distintos tamaños de muestra, además la línea roja representa la curva de distribución normal. Cuando la muestra es de tamaño 50 y 1000 podemos observar una tendencia a distribución normal de los retornos, con retornos estimados de $\beta_1$ de 3.26 y 3.35 respectivamente.
 
 
 
@@ -390,4 +391,4 @@ grid.arrange(g11, g21, g31, g41, nrow=2, ncol=2)
 ```
 
 
-Comentarios 3.c: Primero observamos que el sesgo desaparece. Los retornos observados cuando X2 ~U(0,1) son menores que los resultados observados en pregunta anterior, donde los valores van de 2.46 a 2.52, sin embargo estos siguen siendo constantes ante las variaciones observadas en el tamaño de las muestras. Por otro lado las varianzas encontradas son bastante similares con respecto a los resultados anteriores y nuevamente podemos observar que esta disminuye a medida que el tamaño de la muestra aumenta. Gráficamente y a simple vista no se encuentra un tamaño muestral que tienda a una distribución normal.
+Primero observamos que el sesgo desaparece. Los retornos observados cuando X2 ~U(0,1) son menores que los resultados observados en pregunta anterior, donde los valores van de 2.46 a 2.52, sin embargo estos siguen siendo constantes ante las variaciones observadas en el tamaño de las muestras. Por otro lado las varianzas encontradas son bastante similares con respecto a los resultados anteriores y nuevamente podemos observar que esta disminuye a medida que el tamaño de la muestra aumenta. Gráficamente y a simple vista no se encuentra un tamaño muestral que tienda a una distribución normal.
