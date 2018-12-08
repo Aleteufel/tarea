@@ -1,7 +1,7 @@
 
 ---
 title: "Tarea 5"
-author: "Alexander Teufel, Daniela Urra, Pía Camila Sandoval"
+author: "Pía Camila Sandoval, Alexander Teufel,  Daniela Urra"
 date: "07 de diciembre, 2018"
 output:
   rmarkdown::html_document:
